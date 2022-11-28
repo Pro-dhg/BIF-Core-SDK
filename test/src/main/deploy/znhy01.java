@@ -19,7 +19,18 @@ public class znhy01 {
     public static void main(String[] args) {
         //部署合约
         //合约代码，注意转义
-        String contractCode = "\"use strict\";function queryById(id) {    let data = Chain.load(id);    return data;}function query(input) {    input = JSON.parse(input);    let id = input.id;    let object = queryById(id);    return object;}function main(input) {    input = JSON.parse(input);    Chain.store(input.id, input.data);}function init(input) {    return;}";
+//        String contractCode = "\"use strict\";function queryById(id) {    let data = Chain.load(id);    return data;}function query(input) {    input = JSON.parse(input);    let id = input.id;    let object = queryById(id);    return object;}function main(input) {    input = JSON.parse(input);    Chain.store(input.id, input.data);}function init(input) {    return;}";
+        String contractCode = "\"use strict\";\n" +
+                "\n" +
+                "function query(input) {\n" +
+                "    return  0 ;\n" +
+                "}\n" +
+                "function main(input) {\n" +
+                "    Chain.delegateCall(\"did:bid:ef8TqstyTi5uggUX15V1Sj9ntRz6bK2w\",input);\n" +
+                "}\n" +
+                "function init(input) {\n" +
+                "    return;\n" +
+                "}";
 
         BIFContractCreateRequest createCReq = new BIFContractCreateRequest();
 
