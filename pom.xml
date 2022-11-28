@@ -30,11 +30,12 @@
     <modules>
         <module>bif-chain-sdk-example</module>
         <module>bif-chain-sdk</module>
+        <module>test</module>
     </modules>
 
     <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
     </properties>
 
     <build>
@@ -57,4 +58,19 @@
             </plugins>
         </pluginManagement>
     </build>
+
+
+    <distributionManagement>
+        <repository>
+            <id>air-releases</id>
+            <name>air-releases</name>
+            <url>http://223.0.16.26:8081/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>air-snapshots</id>
+            <name>air-snapshots</name>
+            <url>http://223.0.16.26:8081/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
 </project>
