@@ -8,7 +8,7 @@ BIF-Core-SDK通过API调用的方式提供了星火链网-底层区块链平台�
 
 ## 环境要求 
 - JDK1.8以上的版本(本SDK使用256位密钥加解密,需去官方下载JCE无限制权限策略文件，替换local_policy.jar，US_export_policy.jar文件）。更多信息，请参见[安装JDK](https://www.oracle.com/java/technologies/javase-downloads.html)。
-
+- 经过实际验证，必须使用JDK1.8来做开发，不要问为什么，Just do it!
 - 安装Maven。更多信息，请参见[安装Maven](https://maven.apache.org/download.cgi)。
 
 - 查看Java版本

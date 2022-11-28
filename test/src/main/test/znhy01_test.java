@@ -7,6 +7,8 @@ import cn.bif.model.response.BIFContractInvokeResponse;
 
 /**
  * 根据交易hash 获取合约地址
+ *
+ * 合约成功部署并且获取到合约地址后, 就可以通过SDK发送交易调用合约接口, 我们存储一个Key-Value对到合约里:
  */
 public class znhy01_test {
     public static final String NODE_URL = "http://test.bifcore.bitfactory.cn";  //星火链测试网RPC地址
@@ -23,7 +25,8 @@ public class znhy01_test {
         BIFContractGetAddressResponse cAddrRsp = sdk.getBIFContractService().getContractAddress(cAddrReq);
         if (cAddrRsp.getErrorCode() == 0) {
             System.out.println(JsonUtils.toJSONString(cAddrRsp.getResult()));
-            test01("did:bid:ef8TqstyTi5uggUX15V1Sj9ntRz6bK2w") ;
+            String cAddr = JsonUtils.toJSONString(cAddrRsp.getResult().getContractAddressInfos().get(0).getContractAddress()); //根据交易hash 获取合约地址
+            test01(cAddr) ;
         } else {
             System.out.println(cAddrRsp.getErrorDesc());
         }
