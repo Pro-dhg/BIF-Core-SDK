@@ -1,0 +1,85 @@
+import cn.bif.api.BIFSDK;
+import cn.bif.common.JsonUtils;
+import cn.bif.model.request.BIFContractCreateRequest;
+import cn.bif.model.response.BIFContractCreateResponse;
+
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+/**
+ * 部署成功会返回一个交易hash
+ *
+ * 部署账号要有足够的XHT
+ */
+public class znhy02 {
+    /**
+     * 测试网址
+     */
+    public static final String NODE_URL = "http://test.bifcore.bitfactory.cn";  //星火链测试网RPC地址
+    public static BIFSDK sdk = BIFSDK.getInstance(NODE_URL);
+
+    /**
+     * 部署用户
+     */
+    public static final String address = "did:bid:efJmpzPvG76ktDykMtzKVMAEForBiw6c";
+    public static final String privateKey = "priSPKdmZA2jsa8hzetan3H315HfTWftsueEkZJAxtheKPYhJL";
+
+    /**
+     * 部署代码文件位置
+     */
+    public static String fileName = "D:\\air\\BIF-Core-SDK\\test\\src\\main\\script\\znhy02.js";
+
+
+    public static void main(String[] args) throws Exception {
+
+
+        //如果是JDK11用上面的方法，如果不是用这个方法也很容易
+        byte[] bytes = Files.readAllBytes(Paths.get(fileName));
+
+        String content = new String(bytes, StandardCharsets.UTF_8);
+        System.out.println("下面是需要部署的代码：\n"
+                +"*******************************************************************************************"
+                +"\n"
+                +content
+                +"\n"
+                +"*******************************************************************************************"
+        );
+
+        //部署合约
+        String contractCode = content;
+
+        BIFContractCreateRequest createCReq = new BIFContractCreateRequest();
+
+        //创建方地址和私钥
+        createCReq.setSenderAddress(address);
+        createCReq.setPrivateKey(privateKey);
+
+        //合约初始balance，一般为0
+        createCReq.setInitBalance(1L);
+
+        //合约代码
+        createCReq.setPayload(contractCode);
+
+        //标记和type，javascript合约type为0
+        createCReq.setRemarks("create contract");
+        createCReq.setType(0);
+
+        //交易耗费上限
+        createCReq.setFeeLimit(300000000L);
+
+        System.out.println("开始部署....");
+        //调用SDK创建该合约
+        BIFContractCreateResponse createCRsp = sdk.getBIFContractService().contractCreate(createCReq);
+
+        if (createCRsp.getErrorCode() == 0) {
+            System.out.println("deployment succeeded ! there is return hash :"
+                    +"\n"
+                    +"     "+JsonUtils.toJSONString(createCRsp.getResult()));
+        } else {
+            System.out.println("deployment failed ! there is return hash :"
+                    +"\n"
+                    +"     "+JsonUtils.toJSONString(createCRsp));
+        }
+    }
+}

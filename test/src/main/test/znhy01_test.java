@@ -15,7 +15,7 @@ import cn.bif.model.response.BIFContractInvokeResponse;
 public class znhy01_test {
     public static final String NODE_URL = "http://test.bifcore.bitfactory.cn";  //星火链测试网RPC地址
     public static BIFSDK sdk = BIFSDK.getInstance(NODE_URL);
-    public static String cTxHash = "f826595754f78f10ed8374e23462e428aec95039f71c6119e98c4aac68546e4b";
+    public static String cTxHash = "db2392354fafd4a56fa48ffb694b8ef14e5c6325d10492ef5f988aa9f6fb4e9d";
 
     public static final String address = "did:bid:ef28Wz8twCynVe6PAnamLYCAFJYgJSnMh";
     public static final String privateKey = "priSPKrSftQVRWM33dWxxSmwhRX7ArgyUmwV3pXun79QKsQkW2";
@@ -24,7 +24,7 @@ public class znhy01_test {
         hashDetail(cTxHash);
 //        test01("did:bid:efsLgSysvVR1iUwARB2bRVYhwiJP7xT3");
         test02("did:bid:ef8TqstyTi5uggUX15V1Sj9ntRz6bK2w");
-        test02("did:bid:efiRkLfkn2VkfRepesLzyvuHz2UjaSLm");
+        test02("did:bid:efoHE9py63TWo9tc1QBFW3S3nk4KuCvP");
 
     }
 
