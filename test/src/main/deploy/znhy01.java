@@ -23,10 +23,11 @@ public class znhy01 {
         String contractCode = "\"use strict\";\n" +
                 "\n" +
                 "function query(input) {\n" +
-                "    return  0 ;\n" +
+                "    return Chain.delegateQuery(\"did:bid:ef8TqstyTi5uggUX15V1Sj9ntRz6bK2w\",input);\n" +
                 "}\n" +
                 "function main(input) {\n" +
-                "    Chain.delegateCall(\"did:bid:ef8TqstyTi5uggUX15V1Sj9ntRz6bK2w\",input);\n" +
+                "    input = JSON.parse(input);\n" +
+                "    Chain.store(input.id, input.data);\n" +
                 "}\n" +
                 "function init(input) {\n" +
                 "    return;\n" +

@@ -1,0 +1,9 @@
+业务身份合约-----------> identity.js
+
+注册管理委员会合约------>register_commission.js
+安全稳定委员会合约------>security_commission.js
+
+投票合约-------------->poll.js
+
+域名根区数据管理合约---->root_zone.js
+域名.com数据管理合约--->top_level.js
