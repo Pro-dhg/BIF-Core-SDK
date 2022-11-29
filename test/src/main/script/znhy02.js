@@ -1,7 +1,7 @@
 "use strict";
 
 function query(input) {
-    return Chain.delegateQuery("did:bid:ef8TqstyTi5uggUX15V1Sj9ntRz6bK2w",input);
+    return Chain.contractQuery("did:bid:ef8TqstyTi5uggUX15V1Sj9ntRz6bK2w",input);
 }
 function main(input) {
     input = JSON.parse(input);

@@ -23,7 +23,7 @@ public class znhy01 {
         String contractCode = "\"use strict\";\n" +
                 "\n" +
                 "function query(input) {\n" +
-                "    return Chain.delegateQuery(\"did:bid:ef8TqstyTi5uggUX15V1Sj9ntRz6bK2w\",input);\n" +
+                "    return Chain.contractQuery(\"did:bid:ef8TqstyTi5uggUX15V1Sj9ntRz6bK2w\",input);\n" +
                 "}\n" +
                 "function main(input) {\n" +
                 "    input = JSON.parse(input);\n" +

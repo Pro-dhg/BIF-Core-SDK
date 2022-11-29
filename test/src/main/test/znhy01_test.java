@@ -15,7 +15,7 @@ import cn.bif.model.response.BIFContractInvokeResponse;
 public class znhy01_test {
     public static final String NODE_URL = "http://test.bifcore.bitfactory.cn";  //星火链测试网RPC地址
     public static BIFSDK sdk = BIFSDK.getInstance(NODE_URL);
-    public static String cTxHash = "bc11bbc0c24d99b0d3e72952e63017d07f73d63d16b930d6f439e20e2b295768";
+    public static String cTxHash = "f826595754f78f10ed8374e23462e428aec95039f71c6119e98c4aac68546e4b";
 
     public static final String address = "did:bid:ef28Wz8twCynVe6PAnamLYCAFJYgJSnMh";
     public static final String privateKey = "priSPKrSftQVRWM33dWxxSmwhRX7ArgyUmwV3pXun79QKsQkW2";
@@ -24,7 +24,7 @@ public class znhy01_test {
         hashDetail(cTxHash);
 //        test01("did:bid:efsLgSysvVR1iUwARB2bRVYhwiJP7xT3");
         test02("did:bid:ef8TqstyTi5uggUX15V1Sj9ntRz6bK2w");
-        test02("did:bid:efhidoTaAvkdiZ3Zfd9a9Q68q3gc9kci");
+        test02("did:bid:efiRkLfkn2VkfRepesLzyvuHz2UjaSLm");
 
     }
 
@@ -97,8 +97,8 @@ public class znhy01_test {
         BIFContractCallResponse cCallRsp = sdk.getBIFContractService().contractQuery(cCallReq); //查询
 
         if (cCallRsp.getErrorCode() == 0) {
-//            System.out.println(JsonUtils.toJSONString(cCallRsp.getResult()));
-            System.out.println(JsonUtils.toJSONString(cCallRsp));
+            System.out.println(JsonUtils.toJSONString(cCallRsp.getResult()));
+//            System.out.println(JsonUtils.toJSONString(cCallRsp));
         } else {
             System.out.println(cCallRsp.getErrorDesc());
         }
