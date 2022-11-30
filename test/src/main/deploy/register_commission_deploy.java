@@ -12,7 +12,7 @@ import java.nio.file.Paths;
  *
  * 部署账号要有足够的XHT
  */
-public class znhy02 {
+public class register_commission_deploy {
     /**
      * 测试网址
      */
@@ -28,7 +28,11 @@ public class znhy02 {
     /**
      * 部署代码文件位置
      */
-    public static String fileName = "D:\\air\\BIF-Core-SDK\\test\\src\\main\\script\\znhy02.js";
+    public static String fileName = "D:\\air\\BIF-Core-SDK\\test\\src\\main\\data\\register_commission.js";
+    /**
+     * identity初始化参数 owner设置
+     */
+    public static String registerCommissionInitInput = "{\"commission\":\"测试注册委员会\",\"owner\":\"did:bid:efJmpzPvG76ktDykMtzKVMAEForBiw6c\",\"members\": [{\"id\": \"001\",\"createdAt\": 123},{\"id\": \"002\",\"createdAt\": 123},{\"id\": \"003\",\"createdAt\": 123}]}";
 
 
     public static void main(String[] args) throws Exception {
@@ -54,6 +58,7 @@ public class znhy02 {
         //创建方地址和私钥
         createCReq.setSenderAddress(address);
         createCReq.setPrivateKey(privateKey);
+        createCReq.setInitInput(registerCommissionInitInput);
 
         //合约初始balance，一般为0
         createCReq.setInitBalance(1L);
@@ -62,7 +67,7 @@ public class znhy02 {
         createCReq.setPayload(contractCode);
 
         //标记和type，javascript合约type为0
-        createCReq.setRemarks("create contract");
+        createCReq.setRemarks("identity");
         createCReq.setType(0);
 
         //交易耗费上限
@@ -77,7 +82,7 @@ public class znhy02 {
                     +"\n"
                     +"     "+JsonUtils.toJSONString(createCRsp.getResult()));
         } else {
-            System.out.println("deployment failed ! there is return hash :"
+            System.out.println("deployment failed ! there is return reason :"
                     +"\n"
                     +"     "+JsonUtils.toJSONString(createCRsp));
         }

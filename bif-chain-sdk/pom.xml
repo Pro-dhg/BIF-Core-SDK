@@ -109,4 +109,17 @@
             <version>1.16.20</version>
         </dependency>
     </dependencies>
+
+    <distributionManagement>
+        <repository>
+            <id>air-releases</id>
+            <name>air-releases</name>
+            <url>http://223.0.16.26:8081/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>air-snapshots</id>
+            <name>air-snapshots</name>
+            <url>http://223.0.16.26:8081/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>

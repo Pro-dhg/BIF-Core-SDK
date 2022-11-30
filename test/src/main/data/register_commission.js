@@ -1,6 +1,6 @@
 'use strict';
 const OWNER="owner";
-const COMMISSION='commission';
+const Register_commission='register_commission';
 const COMMISSIONER='commissioner';
 
 function loadObj(key){
@@ -21,7 +21,7 @@ function getKey(first,second,third=''){
 }
 
 function get(){
-    let result = loadObj(COMMISSION);
+    let result = loadObj(Register_commission);
     return result;
 }
 
@@ -42,9 +42,9 @@ function addMember(inputObj){
     Utils.assert(caller === owner, 'no permission');
 
     saveObj(key, entity);
-    let commission = loadObj(COMMISSION);
+    let commission = loadObj(Register_commission);
     commission.members.push(entity);
-    saveObj(COMMISSION, commission);
+    saveObj(Register_commission, commission);
     Chain.tlog('commission', 'the member joined successfully');
 }
 
@@ -54,9 +54,9 @@ function updateMemberInfo(inputObj){
     let oldEntity = loadObj(key);
     Utils.assert(oldEntity !== false, 'not found');
     saveObj(key, entity);
-    let commission = loadObj(COMMISSION);
+    let commission = loadObj(Register_commission);
     commission.members.push(entity);
-    saveObj(COMMISSION, commission);
+    saveObj(Register_commission, commission);
     Chain.tlog('commission', 'the member updated successfully');
 }
 
@@ -67,13 +67,13 @@ function expelMember(inputObj){
     Utils.assert(oldEntity !== false, 'not found');
     delObj(key);
 
-    let commission = loadObj(COMMISSION);
+    let commission = loadObj(Register_commission);
     let members = commission.members;
     members = members.filter(function(value, index, arr){
             return value.id !== id;
     });
     commission.members = members;
-    saveObj(COMMISSION, commission);
+    saveObj(Register_commission, commission);
     Chain.tlog('commission', 'the member was expelled successfully');
 }
 
@@ -101,7 +101,7 @@ function init(input){
         saveObj(getKey(COMMISSIONER, member.id), member);
     }
     saveObj(OWNER, owner);
-    saveObj(COMMISSION, commission);
+    saveObj(Register_commission, commission);
     return true;
 }
 
