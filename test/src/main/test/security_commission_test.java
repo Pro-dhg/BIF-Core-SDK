@@ -2,9 +2,12 @@ import cn.bif.api.BIFSDK;
 import cn.bif.common.JsonUtils;
 import cn.bif.model.request.BIFContractCallRequest;
 import cn.bif.model.request.BIFContractGetAddressRequest;
+import cn.bif.model.request.BIFContractInvokeRequest;
 import cn.bif.model.response.BIFContractCallResponse;
 import cn.bif.model.response.BIFContractGetAddressResponse;
+import cn.bif.model.response.BIFContractInvokeResponse;
 import cn.bif.model.response.result.BIFContractCallResult;
+import cn.bif.model.response.result.BIFContractInvokeResult;
 
 /**
  * 根据交易hash 获取合约地址
@@ -13,16 +16,17 @@ import cn.bif.model.response.result.BIFContractCallResult;
  *
  * input = {"method": "get", "params": {"address": "did:bid:efi9eJga7RS9HHwTmw9c3nHEniqB6FGq"}}
  */
-public class redister_commission_test {
+public class security_commission_test {
     public static final String NODE_URL = "http://test.bifcore.bitfactory.cn";  //星火链测试网RPC地址
     public static BIFSDK sdk = BIFSDK.getInstance(NODE_URL);
-    public static String cTxHash = "77994be8a924b5b3a204c099bb5e6806834994ea4a1df309def038395f955b3f";
+    public static String cTxHash = "ba725d163da24bd67a1a58ff1e447436f9b35aefefa301e095703d8a426974b5";
 
     public static final String address = "did:bid:ef28Wz8twCynVe6PAnamLYCAFJYgJSnMh";
     public static final String privateKey = "priSPKrSftQVRWM33dWxxSmwhRX7ArgyUmwV3pXun79QKsQkW2";
 
     public static void main(String[] args) {
         get(hashDetail(cTxHash));
+//        addMember(hashDetail(cTxHash));
     }
 
     /**
@@ -54,9 +58,25 @@ public class redister_commission_test {
      * @param cAddr
      */
     public static void get(String cAddr){
+//        String callInput = "{\"method\": \"get\",\"params\":{\"id\":\"security_commission\"}}";    //查询input
+        String callInput = "{\"method\": \"get\"}";    //查询input
+
+//        BIFContractInvokeRequest cCallReq = new BIFContractInvokeRequest();
+//        cCallReq.setBIFAmount(1l);
+//        cCallReq.setSenderAddress(address);
+//        cCallReq.setPrivateKey(privateKey);
+//        cCallReq.setInput(callInput);
+//        cCallReq.setContractAddress(cAddr);
+//        BIFContractInvokeResponse cCallRsp = sdk.getBIFContractService().contractInvoke(cCallReq);
+//        if (cCallRsp.getErrorCode() == 0 ){
+//            BIFContractInvokeResult result = cCallRsp.getResult();
+//            System.out.println(JsonUtils.toJSONString(result));
+//        }else {
+//            System.out.println(cCallRsp.getErrorDesc());
+//        }
+
         BIFContractCallRequest cCallReq = new BIFContractCallRequest();             //查询请求
 
-        String callInput = "{\"method\": \"get\"}";    //查询input
 
         cCallReq.setContractAddress(cAddr); // cAddr为 使用交易hash值，获取的合约地址
         cCallReq.setInput(callInput);
@@ -67,6 +87,28 @@ public class redister_commission_test {
             BIFContractCallResult result = cCallRsp.getResult();
             System.out.println(JsonUtils.toJSONString(result));
         } else {
+            System.out.println(cCallRsp.getErrorDesc());
+        }
+    }
+
+    /**
+     * 智能合约查询
+     * @param cAddr
+     */
+    public static void addMember(String cAddr){
+        String callInput = "{\"method\":\"addMember\",\"params\":{\"entity\":{\"id\":\"8547\",\"createdAt\":\"\"}}}";    //查询input
+
+        BIFContractInvokeRequest cCallReq = new BIFContractInvokeRequest();
+        cCallReq.setBIFAmount(1l);
+        cCallReq.setSenderAddress(address);
+        cCallReq.setPrivateKey(privateKey);
+        cCallReq.setInput(callInput);
+        cCallReq.setContractAddress(cAddr);
+        BIFContractInvokeResponse cCallRsp = sdk.getBIFContractService().contractInvoke(cCallReq);
+        if (cCallRsp.getErrorCode() == 0 ){
+            BIFContractInvokeResult result = cCallRsp.getResult();
+            System.out.println(JsonUtils.toJSONString(result));
+        }else {
             System.out.println(cCallRsp.getErrorDesc());
         }
     }

@@ -12,7 +12,7 @@ import java.nio.file.Paths;
  *
  * 部署账号要有足够的XHT
  */
-public class register_commission_deploy {
+public class security_commission_deploy {
     /**
      * 测试网址
      */
@@ -22,13 +22,13 @@ public class register_commission_deploy {
     /**
      * 部署用户
      */
-    public static final String address = "did:bid:efJmpzPvG76ktDykMtzKVMAEForBiw6c";
-    public static final String privateKey = "priSPKdmZA2jsa8hzetan3H315HfTWftsueEkZJAxtheKPYhJL";
+    public static final String address = "did:bid:ef28Wz8twCynVe6PAnamLYCAFJYgJSnMh";
+    public static final String privateKey = "priSPKrSftQVRWM33dWxxSmwhRX7ArgyUmwV3pXun79QKsQkW2";
 
     /**
      * 部署代码文件位置
      */
-    public static String fileName = "D:\\air\\BIF-Core-SDK\\test\\src\\main\\data\\register_commission.js";
+    public static String fileName = "D:\\air\\BIF-Core-SDK\\test\\src\\main\\data\\security_commission.js";
     /**
      * identity初始化参数 owner设置
      */

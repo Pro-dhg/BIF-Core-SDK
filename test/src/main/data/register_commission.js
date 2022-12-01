@@ -91,7 +91,7 @@ function query(input){
 function init(input){
     let inputObj=JSON.parse(input);
     let commission = inputObj.commission;
-    let members = inputObj.members;
+    let members = commission.members;
     let owner = inputObj.owner;
 
     let i = 0;

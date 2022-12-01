@@ -22,6 +22,31 @@ function getKey(first, second, third = '') {
     return (third === '') ? (first + '_' + second) : (first + '_' + second + '_' + third);
 }
 
+function isOkIncommissions(caller){
+    let id = '' ;
+    let reg = loadObj(Register_commission);
+    let sec = loadObj(Security_commission);
+
+    let regMembers = reg.members;
+    let i = 0 ;
+    for (i = 0; i < regMembers.length; i+=1) {
+        let regMember = regMembers[i];
+        if (caller === regMember.id) {
+            id = regMember.id ;
+        }
+    }
+
+    let secMembers = sec.members ;
+    for (i = 0; i < secMembers.length; i+=1) {
+        let secMember = secMembers[i];
+        if (caller === secMember.id){
+            id = secMember.id ;
+        }
+    }
+    Utils.assert(caller === id, 'no permission');
+
+}
+
 function issue(inputObj) {
     let entity = inputObj.entity;
     let key = getKey(VERIFIABLE_CLAIM, entity.id);
@@ -65,7 +90,10 @@ function revoke(inputObj) {
 }
 
 function get(id) {
-    let result = loadObj(Register_commission);
+    let result = [
+        {"register":loadObj(Register_commission)},
+        {"security":loadObj(Security_commission)}
+    ];
 
     return result;
 }
@@ -85,26 +113,25 @@ function findBy(id) {
     return vcs;
 }
 
-function initCommissions(input){
+function initCommissions(inputObj){
     let owner = loadObj(OWNER);
     let caller = Chain.msg.sender;
     Utils.assert(caller === owner, 'no permission');
 
-    let inputObj=input;
-    // if(inputObj.hasOwnProperty("register_commission")){
-
-    // let old_register_commission = loadObj(Register_commission);
-    // if (old_register_commission !== undefined) {
-    //     delObj(Register_commission);
-    // }
-    let contractAddress = inputObj.register_commission.contractAddress;
     let commissionInput = {"method": "get"};
-    let res = Chain.contractQuery(contractAddress,JSON.stringify(commissionInput));
-    let commissionsEntity = JSON.parse(res.result) ;
-    saveObj(Register_commission,commissionsEntity);
+
+    let registerContractAddress = inputObj.register_commission.contractAddress;
+    let registerRes = Chain.contractQuery(registerContractAddress,JSON.stringify(commissionInput));
+    let registerCommissionsEntity = JSON.parse(registerRes.result) ;
+    saveObj(Register_commission,registerCommissionsEntity);
     Chain.tlog('identity', 'the register member init successfully', Register_commission);
 
-    // }
+
+    let securityContractAddress = inputObj.security_commission.contractAddress;
+    let securityRes = Chain.contractQuery(securityContractAddress,JSON.stringify(commissionInput));
+    let securityCommissionsEntity = JSON.parse(securityRes.result);
+    saveObj(Security_commission,securityCommissionsEntity);
+    Chain.tlog('identity','the security member init successfully',Security_commission);
 
 }
 
@@ -123,7 +150,9 @@ function query(input) {
     } else if (inputObj.method === 'findBy') {
         result = findBy(inputObj.params.id);
     }else if (inputObj.method === 'initCommissions') {
-        result = initCommissions(inputObj.register_commission);
+        result = initCommissions(inputObj.params);
+    }else if (inputObj.method === 'isOkIncommissions') {
+        result = isOkIncommissions(inputObj.params);
     } else {
         result = false;
     }
@@ -131,10 +160,8 @@ function query(input) {
 }
 
 function main(input) {
-    let funcList = {'issue': issue, 'revoke': revoke, 'get': get, 'findBy': findBy,'initCommissions': initCommissions};
+    let funcList = {'issue': issue, 'revoke': revoke, 'get': get, 'findBy': findBy,'initCommissions': initCommissions,'isOkIncommissions':isOkIncommissions};
     let inputObj = JSON.parse(input);
     Utils.assert(funcList.hasOwnProperty(inputObj.method) && typeof funcList[inputObj.method] === 'function', 'Cannot find func:' + inputObj.method);
-    // Chain.del(Register_commission);
-    // delObj(Register_commission);
     funcList[inputObj.method](inputObj.params);
 }
