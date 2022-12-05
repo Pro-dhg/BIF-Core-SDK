@@ -118,13 +118,17 @@ function initCommissions(inputObj){
     let caller = Chain.msg.sender;
     Utils.assert(caller === owner, 'no permission');
 
+    if (inputObj.register_commission !== undefined){
     let registerContractAddress = inputObj.register_commission.contractAddress;
-    Chain.contractCall(registerContractAddress,true,"0",JSON.stringify(inputObj.register_commission));
+        Chain.contractCall(registerContractAddress,true,"0",JSON.stringify(inputObj.register_commission));
+    }
 
+    if (inputObj.security_commission !== undefined){
     let securityContractAddress = inputObj.security_commission.contractAddress;
-    Chain.contractCall(securityContractAddress,true,"0",JSON.stringify(inputObj.security_commission));
+        Chain.contractCall(securityContractAddress,true,"0",JSON.stringify(inputObj.security_commission));
+    }
 
-    Chain.tlog('commission', 'init two commission is ok');
+    Chain.tlog('commission', 'init commission is ok');
 }
 
 function init(input) {

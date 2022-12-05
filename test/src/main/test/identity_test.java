@@ -19,7 +19,7 @@ import org.mortbay.util.ajax.JSON;
 public class identity_test {
     public static final String NODE_URL = "http://test.bifcore.bitfactory.cn";  //星火链测试网RPC地址
     public static BIFSDK sdk = BIFSDK.getInstance(NODE_URL);
-    public static String cTxHash = "506cfdeb4312f6dc812a81abc9e634b8dfd9169d92f4cf2c79520e2b8e5ceb52";
+    public static String cTxHash = "61a7d35cc09d6929b6cc0d201f92f92c3c18b9b7cc5cccc68d27a54a05173840";
 
     public static final String address = "did:bid:efJmpzPvG76ktDykMtzKVMAEForBiw6c";
     public static final String privateKey = "priSPKdmZA2jsa8hzetan3H315HfTWftsueEkZJAxtheKPYhJL";
@@ -94,7 +94,7 @@ public class identity_test {
                 "   \"params\": {  " +
                 "    \"commission\": { " +
                 "     \"members\": [{ " +
-                "      \"id\": \"8547\", " +
+                "      \"id\": \"1111\", " +
                 "      \"createdAt\": 123 " +
                 "     }, { " +
                 "      \"id\": \"2345\", " +
@@ -115,7 +115,7 @@ public class identity_test {
                 "   \"params\": { " +
                 "    \"commission\": { " +
                 "     \"members\": [{ " +
-                "      \"id\": \"8547\", " +
+                "      \"id\": \"1111\", " +
                 "      \"createdAt\": 123 " +
                 "     }, { " +
                 "      \"id\": \"2341\", " +
