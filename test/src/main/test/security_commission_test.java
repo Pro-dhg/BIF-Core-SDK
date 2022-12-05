@@ -19,12 +19,13 @@ import cn.bif.model.response.result.BIFContractInvokeResult;
 public class security_commission_test {
     public static final String NODE_URL = "http://test.bifcore.bitfactory.cn";  //星火链测试网RPC地址
     public static BIFSDK sdk = BIFSDK.getInstance(NODE_URL);
-    public static String cTxHash = "ba725d163da24bd67a1a58ff1e447436f9b35aefefa301e095703d8a426974b5";
+    public static String cTxHash = "66231b860736dab114f72127baf332ff0833a270a155fcb28b2c7d36ec78d580";
 
     public static final String address = "did:bid:ef28Wz8twCynVe6PAnamLYCAFJYgJSnMh";
     public static final String privateKey = "priSPKrSftQVRWM33dWxxSmwhRX7ArgyUmwV3pXun79QKsQkW2";
 
     public static void main(String[] args) {
+//        initCommissions(hashDetail(cTxHash));
         get(hashDetail(cTxHash));
 //        addMember(hashDetail(cTxHash));
     }
@@ -110,6 +111,26 @@ public class security_commission_test {
             System.out.println(JsonUtils.toJSONString(result));
         }else {
             System.out.println(cCallRsp.getErrorDesc());
+        }
+    }
+    /**
+     * 测试联盟委员会成员初始化
+     * @param cAddr
+     */
+    public static void initCommissions(String cAddr){
+        String callInput = "{\"method\":\"initCommissions\",\"params\":{\"contractAddress\":\"did:bid:efBZK3SSPrukRpaMkUtZD1gDn7QMubjq\",\"owner\":\"did:bid:ef28Wz8twCynVe6PAnamLYCAFJYgJSnMh\",\"commission\":{\"members\":[{\"id\":\"2001\",\"createdAt\":123},{\"id\":\"0002\",\"createdAt\":123},{\"id\":\"0003\",\"createdAt\":123},{\"id\":\"0004\",\"createdAt\":123}]}}}";    //查询input
+
+        BIFContractInvokeRequest cCallReq = new BIFContractInvokeRequest();
+        cCallReq.setContractAddress(cAddr);
+        cCallReq.setSenderAddress(address);
+        cCallReq.setBIFAmount(1l);
+        cCallReq.setPrivateKey(privateKey);
+        cCallReq.setInput(callInput);
+        BIFContractInvokeResponse res = sdk.getBIFContractService().contractInvoke(cCallReq);
+        if (res.getErrorCode()==0){
+            System.out.println(JsonUtils.toJSONString(res.getResult()));
+        }else {
+            System.out.println(res.getErrorDesc());
         }
     }
 

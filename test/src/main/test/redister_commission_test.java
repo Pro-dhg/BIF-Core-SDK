@@ -2,8 +2,10 @@ import cn.bif.api.BIFSDK;
 import cn.bif.common.JsonUtils;
 import cn.bif.model.request.BIFContractCallRequest;
 import cn.bif.model.request.BIFContractGetAddressRequest;
+import cn.bif.model.request.BIFContractInvokeRequest;
 import cn.bif.model.response.BIFContractCallResponse;
 import cn.bif.model.response.BIFContractGetAddressResponse;
+import cn.bif.model.response.BIFContractInvokeResponse;
 import cn.bif.model.response.result.BIFContractCallResult;
 
 /**
@@ -16,12 +18,13 @@ import cn.bif.model.response.result.BIFContractCallResult;
 public class redister_commission_test {
     public static final String NODE_URL = "http://test.bifcore.bitfactory.cn";  //星火链测试网RPC地址
     public static BIFSDK sdk = BIFSDK.getInstance(NODE_URL);
-    public static String cTxHash = "77994be8a924b5b3a204c099bb5e6806834994ea4a1df309def038395f955b3f";
+    public static String cTxHash = "56d8fa776cf9c69502036ed05be510ca33d4a3199a1befc72ec19fc678def1ff";
 
     public static final String address = "did:bid:ef28Wz8twCynVe6PAnamLYCAFJYgJSnMh";
     public static final String privateKey = "priSPKrSftQVRWM33dWxxSmwhRX7ArgyUmwV3pXun79QKsQkW2";
 
     public static void main(String[] args) {
+//        initCommissions(hashDetail(cTxHash));
         get(hashDetail(cTxHash));
     }
 
@@ -70,6 +73,29 @@ public class redister_commission_test {
             System.out.println(cCallRsp.getErrorDesc());
         }
     }
+
+    /**
+     * 测试联盟委员会成员初始化
+     * @param cAddr
+     */
+    public static void initCommissions(String cAddr){
+        String callInput = "{\"method\":\"initCommissions\",\"params\":{\"contractAddress\":\"did:bid:efBZK3SSPrukRpaMkUtZD1gDn7QMubjq\",\"owner\":\"did:bid:ef28Wz8twCynVe6PAnamLYCAFJYgJSnMh\",\"commission\":{\"members\":[{\"id\":\"2001\",\"createdAt\":123},{\"id\":\"0002\",\"createdAt\":123},{\"id\":\"0003\",\"createdAt\":123},{\"id\":\"0004\",\"createdAt\":123}]}}}";    //查询input
+
+        BIFContractInvokeRequest cCallReq = new BIFContractInvokeRequest();
+        cCallReq.setContractAddress(cAddr);
+        cCallReq.setSenderAddress(address);
+        cCallReq.setBIFAmount(1l);
+        cCallReq.setPrivateKey(privateKey);
+        cCallReq.setInput(callInput);
+        BIFContractInvokeResponse res = sdk.getBIFContractService().contractInvoke(cCallReq);
+        if (res.getErrorCode()==0){
+            System.out.println(JsonUtils.toJSONString(res.getResult()));
+        }else {
+            System.out.println(res.getErrorDesc());
+        }
+    }
+
+
 
 
 }

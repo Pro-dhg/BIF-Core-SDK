@@ -19,15 +19,18 @@ import org.mortbay.util.ajax.JSON;
 public class identity_test {
     public static final String NODE_URL = "http://test.bifcore.bitfactory.cn";  //星火链测试网RPC地址
     public static BIFSDK sdk = BIFSDK.getInstance(NODE_URL);
-    public static String cTxHash = "37cdaf9889bf14562ec6ece3f17ac2153ddbdaf0797bf6b1f602b0d8437e9174";
+    public static String cTxHash = "506cfdeb4312f6dc812a81abc9e634b8dfd9169d92f4cf2c79520e2b8e5ceb52";
 
     public static final String address = "did:bid:efJmpzPvG76ktDykMtzKVMAEForBiw6c";
     public static final String privateKey = "priSPKdmZA2jsa8hzetan3H315HfTWftsueEkZJAxtheKPYhJL";
 
+    public static final String registerContractAddress= "did:bid:ef21X1tsCF7EfEJCVffdgjrDh3sLoB2aA";
+    public static final String securityContractAddress= "did:bid:efkyhDYiYFz4uzPcrQncnrng7dxTKg5y";
+
     public static void main(String[] args) {
         initCommissions(hashDetail(cTxHash));
-        get(hashDetail(cTxHash));
-        isOkIncommissions(hashDetail(cTxHash));
+//        get(hashDetail(cTxHash));
+//        isOkIncommissions(hashDetail(cTxHash));
     }
 
     /**
@@ -43,9 +46,9 @@ public class identity_test {
         BIFContractGetAddressResponse cAddrRsp = sdk.getBIFContractService().getContractAddress(cAddrReq);
         if (cAddrRsp.getErrorCode() == 0) {
             System.out.println("交易hash值："+cTxHash
-                               +"\n"
+                               +" "
                                +"获取合约地址为："+JsonUtils.toJSONString(cAddrRsp.getResult().getContractAddressInfos().get(0).getContractAddress())
-                               +"\n");
+                               +" ");
             return JsonUtils.toJSONString(cAddrRsp.getResult().getContractAddressInfos().get(0).getContractAddress()) ;
         } else {
             System.out.println(cAddrRsp.getErrorDesc());
@@ -81,7 +84,56 @@ public class identity_test {
      * {"security_commission": {"contractAddress": "did:bid:ef8TqstyTi5uggUX15V1Sj9ntRz6bK2w"},"register_commission": {"contractAddress": "did:bid:ef8TqstyTi5uggUX15V1Sj9ntRz6bK2w"}}
      */
     public static void initCommissions(String cAddr){
-        String callInput = "{\"method\": \"initCommissions\",\"params\":{\"owner\": \"did:bid:efJmpzPvG76ktDykMtzKVMAEForBiw6c\",\"security_commission\": {\"contractAddress\": \"did:bid:ef8zG798XQs6qbzG5T89XhR12swCFRhU\"},\"register_commission\": {\"contractAddress\": \"did:bid:efx5hhP9hHYHFWB3RzvwYPw5Kxj9vK55\"}}}";    //查询input
+        String callInput = "{ " +
+                " \"method\": \"initCommissions\", " +
+                " \"params\": { " +
+                "  \"owner\": \"did:bid:efJmpzPvG76ktDykMtzKVMAEForBiw6d\", " +
+                "  \"security_commission\": { " +
+                "   \"contractAddress\": \""+securityContractAddress+"\", " +
+                "   \"method\": \"initCommissions\", " +
+                "   \"params\": { " +
+                "    \"owner\": \"did:bid:ef28Wz8twCynVe6PAnamLYCAFJYgJSnMh\", " +
+                "    \"commission\": { " +
+                "     \"members\": [{ " +
+                "      \"id\": \"8547\", " +
+                "      \"createdAt\": 123 " +
+                "     }, { " +
+                "      \"id\": \"2345\", " +
+                "      \"createdAt\": 123 " +
+                "     }, { " +
+                "      \"id\": \"4312\", " +
+                "      \"createdAt\": 123 " +
+                "     }, { " +
+                "      \"id\": \"6454\", " +
+                "      \"createdAt\": 123 " +
+                "     }] " +
+                "    } " +
+                "   } " +
+                "  }, " +
+                "  \"register_commission\": { " +
+                "   \"contractAddress\": \""+registerContractAddress+"\", " +
+                "   \"method\": \"initCommissions\", " +
+                "   \"params\": { " +
+                "    \"owner\": \"did:bid:ef28Wz8twCynVe6PAnamLYCAFJYgJSnMh\", " +
+                "    \"commission\": { " +
+                "     \"members\": [{ " +
+                "      \"id\": \"8547\", " +
+                "      \"createdAt\": 123 " +
+                "     }, { " +
+                "      \"id\": \"2341\", " +
+                "      \"createdAt\": 123 " +
+                "     }, { " +
+                "      \"id\": \"5432\", " +
+                "      \"createdAt\": 123 " +
+                "     }, { " +
+                "      \"id\": \"3452\", " +
+                "      \"createdAt\": 123 " +
+                "     }] " +
+                "    } " +
+                "   } " +
+                "  } " +
+                " } " +
+                "}";
 
         BIFContractInvokeRequest cCallReq = new BIFContractInvokeRequest();
         cCallReq.setContractAddress(cAddr);
@@ -95,6 +147,20 @@ public class identity_test {
         }else {
             System.out.println(res.getErrorDesc());
         }
+
+//        BIFContractCallRequest cCallReq = new BIFContractCallRequest();
+//        cCallReq.setContractAddress(cAddr); // cAddr为 使用交易hash值，获取的合约地址
+//        cCallReq.setInput(callInput);
+//        cCallReq.setSourceAddress(address);
+//
+//        BIFContractCallResponse cCallRsp = sdk.getBIFContractService().contractQuery(cCallReq); //查询
+//
+//        if (cCallRsp.getErrorCode() == 0) {
+//            BIFContractCallResult result = cCallRsp.getResult();
+//            System.out.println(JsonUtils.toJSONString(result.getQueryRets()));
+//        } else {
+//            System.out.println(cCallRsp.getErrorDesc());
+//        }
 
     }
 
@@ -118,19 +184,6 @@ public class identity_test {
         } else {
             System.out.println(cCallRsp.getErrorDesc());
         }
-
-//        BIFContractInvokeRequest cCallReq = new BIFContractInvokeRequest();
-//        cCallReq.setContractAddress(cAddr);
-//        cCallReq.setSenderAddress(address);
-//        cCallReq.setBIFAmount(1l);
-//        cCallReq.setPrivateKey(privateKey);
-//        cCallReq.setInput(callInput);
-//        BIFContractInvokeResponse res = sdk.getBIFContractService().contractInvoke(cCallReq);
-//        if (res.getErrorCode()==0){
-//            System.out.println(JsonUtils.toJSONString(res.getResult()));
-//        }else {
-//            System.out.println(res.getErrorDesc());
-//        }
 
     }
 

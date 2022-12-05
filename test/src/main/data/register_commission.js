@@ -25,6 +25,28 @@ function get(){
     return result;
 }
 
+function initCommissions(inputObj){
+
+    let commission = inputObj.commission;
+    let members = commission.members;
+
+    let i = 0;
+    for(i =0; i < members.length; i+=1){
+        let member = members[i];
+        member.createdAt = Chain.block.timestamp;
+        saveObj(getKey(COMMISSIONER, member.id), member);
+    }
+    let commissions = loadObj(Register_commission);
+    commission.members.push(commissions.members);
+
+    saveObj(Register_commission, commission);
+    // let owner = loadObj(OWNER);
+    // let caller = Chain.msg.initiator;
+    // Utils.assert(caller === owner, JSON.stringify(inputObj));
+    return inputObj;
+
+}
+
 function getMember(id){
     let result = loadObj(getKey(COMMISSIONER,id));
     return result;
@@ -82,6 +104,8 @@ function query(input){
     let inputObj=JSON.parse(input);
     if(inputObj.method==='getMember') {
         result=getMember(inputObj.params.id);
+    }else if(inputObj.method==='initCommissions') {
+        result=initCommissions(inputObj.params);
     }else{
         result=get();
     }
@@ -106,7 +130,7 @@ function init(input){
 }
 
 function main(input){
-    let funcList= {'get':get,'getMember':getMember, 'addMember':addMember, 'updateMemberInfo':updateMemberInfo, 'expelMember':expelMember};
+    let funcList= {'get':get,'getMember':getMember, 'addMember':addMember, 'updateMemberInfo':updateMemberInfo, 'expelMember':expelMember,'initCommissions':initCommissions};
     let inputObj=JSON.parse(input);
     Utils.assert(funcList.hasOwnProperty(inputObj.method) &&typeof funcList[inputObj.method]==='function','Cannot find func:'+inputObj.method);
     funcList[inputObj.method](inputObj.params);

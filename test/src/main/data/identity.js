@@ -118,20 +118,14 @@ function initCommissions(inputObj){
     let caller = Chain.msg.sender;
     Utils.assert(caller === owner, 'no permission');
 
-    let commissionInput = {"method": "get"};
-
     let registerContractAddress = inputObj.register_commission.contractAddress;
-    let registerRes = Chain.contractQuery(registerContractAddress,JSON.stringify(commissionInput));
-    let registerCommissionsEntity = JSON.parse(registerRes.result) ;
-    saveObj(Register_commission,registerCommissionsEntity);
-    Chain.tlog('identity', 'the register member init successfully', Register_commission);
-
+    let res = Chain.contractCall(registerContractAddress,true,"0",JSON.stringify(inputObj.register_commission));
 
     let securityContractAddress = inputObj.security_commission.contractAddress;
-    let securityRes = Chain.contractQuery(securityContractAddress,JSON.stringify(commissionInput));
-    let securityCommissionsEntity = JSON.parse(securityRes.result);
-    saveObj(Security_commission,securityCommissionsEntity);
-    Chain.tlog('identity','the security member init successfully',Security_commission);
+    Chain.contractCall(securityContractAddress,true,"0",JSON.stringify(inputObj.security_commission));
+
+    // return "commissions init ok " ;
+    return res ;
 
 }
 

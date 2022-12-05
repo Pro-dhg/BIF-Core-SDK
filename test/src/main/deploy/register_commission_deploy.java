@@ -32,7 +32,7 @@ public class register_commission_deploy {
     /**
      * identity初始化参数 owner设置
      */
-    public static String registerCommissionInitInput = "{\"commission\": {\"members\": [{\"id\":\"0001\",\"createdAt\": 123},{\"id\": \"0002\",\"createdAt\": 123},{\"id\": \"0003\",\"createdAt\": 123},{\"id\": \"0004\",\"createdAt\": 123}]},\"owner\":\"did:bid:ef28Wz8twCynVe6PAnamLYCAFJYgJSnMh\"}";
+    public static String registerCommissionInitInput = "{\"commission\": {\"members\": [{\"id\":\"1001\",\"createdAt\": 123},{\"id\": \"1002\",\"createdAt\": 123},{\"id\": \"1003\",\"createdAt\": 123},{\"id\": \"1004\",\"createdAt\": 123}]},\"owner\":\"did:bid:ef28Wz8twCynVe6PAnamLYCAFJYgJSnMh\"}";
 
 
     public static void main(String[] args) throws Exception {
