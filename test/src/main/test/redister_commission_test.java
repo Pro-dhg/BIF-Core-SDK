@@ -18,7 +18,7 @@ import cn.bif.model.response.result.BIFContractCallResult;
 public class redister_commission_test {
     public static final String NODE_URL = "http://test.bifcore.bitfactory.cn";  //星火链测试网RPC地址
     public static BIFSDK sdk = BIFSDK.getInstance(NODE_URL);
-    public static String cTxHash = "56d8fa776cf9c69502036ed05be510ca33d4a3199a1befc72ec19fc678def1ff";
+    public static String cTxHash = "3a0f001e1b8cd20f22ad907be6be5fb75cc646fdb377f911a3952bc0e5c8c5ac";
 
     public static final String address = "did:bid:ef28Wz8twCynVe6PAnamLYCAFJYgJSnMh";
     public static final String privateKey = "priSPKrSftQVRWM33dWxxSmwhRX7ArgyUmwV3pXun79QKsQkW2";

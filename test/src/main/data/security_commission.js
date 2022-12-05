@@ -36,11 +36,15 @@ function initCommissions(inputObj){
         member.createdAt = Chain.block.timestamp;
         saveObj(getKey(COMMISSIONER, member.id), member);
     }
-    let commissions = loadObj(Security_commission);
-    commission.members.push(commissions.members);
+    let commissions = loadObj(Security_commission).members;
+
+    for (i = 0; i < commissions.length; i+=1) {
+        let memberP = commissions[i];
+        commission.members.push(memberP);
+    }
 
     saveObj(Security_commission, commission);
-    return inputObj;
+    Chain.tlog('commission', 'the security member init successfully');
 
 }
 

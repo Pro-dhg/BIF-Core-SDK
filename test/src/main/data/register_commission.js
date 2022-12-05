@@ -36,14 +36,16 @@ function initCommissions(inputObj){
         member.createdAt = Chain.block.timestamp;
         saveObj(getKey(COMMISSIONER, member.id), member);
     }
-    let commissions = loadObj(Register_commission);
-    commission.members.push(commissions.members);
+
+    let commissions = loadObj(Register_commission).members;
+
+    for (i = 0; i < commissions.length; i+=1) {
+        let memberP = commissions[i];
+        commission.members.push(memberP);
+    }
 
     saveObj(Register_commission, commission);
-    // let owner = loadObj(OWNER);
-    // let caller = Chain.msg.initiator;
-    // Utils.assert(caller === owner, JSON.stringify(inputObj));
-    return inputObj;
+    Chain.tlog('commission', 'the register member init successfully');
 
 }
 

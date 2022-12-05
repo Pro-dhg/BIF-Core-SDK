@@ -119,14 +119,12 @@ function initCommissions(inputObj){
     Utils.assert(caller === owner, 'no permission');
 
     let registerContractAddress = inputObj.register_commission.contractAddress;
-    let res = Chain.contractCall(registerContractAddress,true,"0",JSON.stringify(inputObj.register_commission));
+    Chain.contractCall(registerContractAddress,true,"0",JSON.stringify(inputObj.register_commission));
 
     let securityContractAddress = inputObj.security_commission.contractAddress;
     Chain.contractCall(securityContractAddress,true,"0",JSON.stringify(inputObj.security_commission));
 
-    // return "commissions init ok " ;
-    return res ;
-
+    Chain.tlog('commission', 'init two commission is ok');
 }
 
 function init(input) {

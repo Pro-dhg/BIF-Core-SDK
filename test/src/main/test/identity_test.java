@@ -24,8 +24,8 @@ public class identity_test {
     public static final String address = "did:bid:efJmpzPvG76ktDykMtzKVMAEForBiw6c";
     public static final String privateKey = "priSPKdmZA2jsa8hzetan3H315HfTWftsueEkZJAxtheKPYhJL";
 
-    public static final String registerContractAddress= "did:bid:ef21X1tsCF7EfEJCVffdgjrDh3sLoB2aA";
-    public static final String securityContractAddress= "did:bid:efkyhDYiYFz4uzPcrQncnrng7dxTKg5y";
+    public static final String registerContractAddress= "did:bid:ef218CL2ipZh7fY5ZTNNDHLCzmNSLmsh6";
+    public static final String securityContractAddress= "did:bid:efRH2pSqqVNMt6MsxM6A8nowB8CBsT5U";
 
     public static void main(String[] args) {
         initCommissions(hashDetail(cTxHash));
@@ -91,8 +91,7 @@ public class identity_test {
                 "  \"security_commission\": { " +
                 "   \"contractAddress\": \""+securityContractAddress+"\", " +
                 "   \"method\": \"initCommissions\", " +
-                "   \"params\": { " +
-                "    \"owner\": \"did:bid:ef28Wz8twCynVe6PAnamLYCAFJYgJSnMh\", " +
+                "   \"params\": {  " +
                 "    \"commission\": { " +
                 "     \"members\": [{ " +
                 "      \"id\": \"8547\", " +
@@ -114,7 +113,6 @@ public class identity_test {
                 "   \"contractAddress\": \""+registerContractAddress+"\", " +
                 "   \"method\": \"initCommissions\", " +
                 "   \"params\": { " +
-                "    \"owner\": \"did:bid:ef28Wz8twCynVe6PAnamLYCAFJYgJSnMh\", " +
                 "    \"commission\": { " +
                 "     \"members\": [{ " +
                 "      \"id\": \"8547\", " +
