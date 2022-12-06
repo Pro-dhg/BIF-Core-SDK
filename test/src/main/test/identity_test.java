@@ -24,12 +24,12 @@ public class identity_test {
     public static final String address = "did:bid:efJmpzPvG76ktDykMtzKVMAEForBiw6c";
     public static final String privateKey = "priSPKdmZA2jsa8hzetan3H315HfTWftsueEkZJAxtheKPYhJL";
 
-    public static final String registerContractAddress= "did:bid:ef218CL2ipZh7fY5ZTNNDHLCzmNSLmsh6";
-    public static final String securityContractAddress= "did:bid:efRH2pSqqVNMt6MsxM6A8nowB8CBsT5U";
+    public static final String registerContractAddress= "did:bid:efuFKXUfbpBrKZLEaCHebEf1j66qKHdS";
+    public static final String securityContractAddress= "did:bid:efWRw14pBx83E3oX3BGHBvGgGmBqFcdH";
 
     public static void main(String[] args) {
-        initCommissions(hashDetail(cTxHash));
-//        get(hashDetail(cTxHash));
+//        initCommissions(hashDetail(cTxHash));
+        get(hashDetail(cTxHash));
 //        isOkIncommissions(hashDetail(cTxHash));
     }
 

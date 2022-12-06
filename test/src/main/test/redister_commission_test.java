@@ -7,6 +7,7 @@ import cn.bif.model.response.BIFContractCallResponse;
 import cn.bif.model.response.BIFContractGetAddressResponse;
 import cn.bif.model.response.BIFContractInvokeResponse;
 import cn.bif.model.response.result.BIFContractCallResult;
+import cn.bif.model.response.result.BIFContractInvokeResult;
 
 /**
  * 根据交易hash 获取合约地址
@@ -18,14 +19,18 @@ import cn.bif.model.response.result.BIFContractCallResult;
 public class redister_commission_test {
     public static final String NODE_URL = "http://test.bifcore.bitfactory.cn";  //星火链测试网RPC地址
     public static BIFSDK sdk = BIFSDK.getInstance(NODE_URL);
-    public static String cTxHash = "3a0f001e1b8cd20f22ad907be6be5fb75cc646fdb377f911a3952bc0e5c8c5ac";
+    public static String cTxHash = "a97fbb5585894d3601735b158b34122c319bdae8bc008ef7ac946696d1ea7c24";
 
     public static final String address = "did:bid:ef28Wz8twCynVe6PAnamLYCAFJYgJSnMh";
     public static final String privateKey = "priSPKrSftQVRWM33dWxxSmwhRX7ArgyUmwV3pXun79QKsQkW2";
 
     public static void main(String[] args) {
 //        initCommissions(hashDetail(cTxHash));
-        get(hashDetail(cTxHash));
+//        addMember(hashDetail(cTxHash));
+//        expelMember(hashDetail(cTxHash));
+        updateMemberInfo(hashDetail(cTxHash));
+//        get(hashDetail(cTxHash));
+        getMember(hashDetail(cTxHash));
     }
 
     /**
@@ -70,6 +75,93 @@ public class redister_commission_test {
             BIFContractCallResult result = cCallRsp.getResult();
             System.out.println(JsonUtils.toJSONString(result));
         } else {
+            System.out.println(cCallRsp.getErrorDesc());
+        }
+    }
+
+    /**
+     * 智能合约查询
+     * @param cAddr
+     */
+    public static void getMember(String cAddr){
+        String callInput = "{\"method\":\"getMember\",\"params\":{\"id\":\"1004\"}}";    //查询input
+
+        BIFContractCallRequest cCallReq = new BIFContractCallRequest();             //查询请求
+
+
+        cCallReq.setContractAddress(cAddr); // cAddr为 使用交易hash值，获取的合约地址
+        cCallReq.setInput(callInput);
+
+        BIFContractCallResponse cCallRsp = sdk.getBIFContractService().contractQuery(cCallReq); //查询
+
+        if (cCallRsp.getErrorCode() == 0) {
+            BIFContractCallResult result = cCallRsp.getResult();
+            System.out.println(JsonUtils.toJSONString(result));
+        } else {
+            System.out.println(cCallRsp.getErrorDesc());
+        }
+    }
+
+    /**
+     * 智能合约添加
+     * @param cAddr
+     */
+    public static void addMember(String cAddr){
+        String callInput = "{\"method\":\"addMember\",\"params\":{\"entity\":{\"id\":\"1004\",\"createdAt\":\"\"}}}";    //查询input
+
+        BIFContractInvokeRequest cCallReq = new BIFContractInvokeRequest();
+        cCallReq.setBIFAmount(1l);
+        cCallReq.setSenderAddress(address);
+        cCallReq.setPrivateKey(privateKey);
+        cCallReq.setInput(callInput);
+        cCallReq.setContractAddress(cAddr);
+        BIFContractInvokeResponse cCallRsp = sdk.getBIFContractService().contractInvoke(cCallReq);
+        if (cCallRsp.getErrorCode() == 0 ){
+            BIFContractInvokeResult result = cCallRsp.getResult();
+            System.out.println(JsonUtils.toJSONString(result));
+        }else {
+            System.out.println(cCallRsp.getErrorDesc());
+        }
+    }
+    /**
+     * 智能合约剔除成员
+     * @param cAddr
+     */
+    public static void expelMember(String cAddr){
+        String callInput = "{\"method\":\"expelMember\",\"params\":{\"id\":\"1004\"}}";    //查询input
+
+        BIFContractInvokeRequest cCallReq = new BIFContractInvokeRequest();
+        cCallReq.setBIFAmount(1l);
+        cCallReq.setSenderAddress(address);
+        cCallReq.setPrivateKey(privateKey);
+        cCallReq.setInput(callInput);
+        cCallReq.setContractAddress(cAddr);
+        BIFContractInvokeResponse cCallRsp = sdk.getBIFContractService().contractInvoke(cCallReq);
+        if (cCallRsp.getErrorCode() == 0 ){
+            BIFContractInvokeResult result = cCallRsp.getResult();
+            System.out.println(JsonUtils.toJSONString(result));
+        }else {
+            System.out.println(cCallRsp.getErrorDesc());
+        }
+    }
+    /**
+     * 智能合约修改成员信息
+     * @param cAddr
+     */
+    public static void updateMemberInfo(String cAddr){
+        String callInput = "{\"method\":\"updateMemberInfo\",\"params\":{\"entity\":{\"id\":\"1004\",\"createdAt\":\"\",\"emailAddress\":\"123@yamu.com\",\"phoneNumber\":\"1001011\"}}}";    //查询input
+
+        BIFContractInvokeRequest cCallReq = new BIFContractInvokeRequest();
+        cCallReq.setBIFAmount(1l);
+        cCallReq.setSenderAddress(address);
+        cCallReq.setPrivateKey(privateKey);
+        cCallReq.setInput(callInput);
+        cCallReq.setContractAddress(cAddr);
+        BIFContractInvokeResponse cCallRsp = sdk.getBIFContractService().contractInvoke(cCallReq);
+        if (cCallRsp.getErrorCode() == 0 ){
+            BIFContractInvokeResult result = cCallRsp.getResult();
+            System.out.println(JsonUtils.toJSONString(result));
+        }else {
             System.out.println(cCallRsp.getErrorDesc());
         }
     }

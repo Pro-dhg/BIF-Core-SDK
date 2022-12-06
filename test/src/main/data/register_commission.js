@@ -57,6 +57,7 @@ function getMember(id){
 function addMember(inputObj){
     let entity = inputObj.entity;
     let key = getKey(COMMISSIONER, entity.id);
+    entity.createdAt = Chain.block.timestamp;
 
     let oldEntity = loadObj(key);
     Utils.assert(oldEntity === false, 'already exists');
@@ -75,10 +76,12 @@ function addMember(inputObj){
 function updateMemberInfo(inputObj){
     let entity = inputObj.entity;
     let key = getKey(COMMISSIONER, entity.id);
+    entity.createdAt = Chain.block.timestamp;
     let oldEntity = loadObj(key);
     Utils.assert(oldEntity !== false, 'not found');
     saveObj(key, entity);
     let commission = loadObj(Register_commission);
+    commission.members.splice(commission.members.findIndex((value)=>value.id===entity.id),1);
     commission.members.push(entity);
     saveObj(Register_commission, commission);
     Chain.tlog('commission', 'the member updated successfully');
