@@ -26,7 +26,4 @@
   [data]    javascript智能合约
   [deploy]  智能合约部署方法
   [test]    智能合约测试
-  
-  
-
 ```
