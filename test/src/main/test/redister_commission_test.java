@@ -26,9 +26,9 @@ public class redister_commission_test {
 
     public static void main(String[] args) {
 //        initCommissions(hashDetail(cTxHash));
-//        addMember(hashDetail(cTxHash));
+        addMember(hashDetail(cTxHash));
 //        expelMember(hashDetail(cTxHash));
-        updateMemberInfo(hashDetail(cTxHash));
+//        updateMemberInfo(hashDetail(cTxHash));
 //        get(hashDetail(cTxHash));
         getMember(hashDetail(cTxHash));
     }

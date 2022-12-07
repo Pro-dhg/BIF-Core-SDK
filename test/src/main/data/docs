@@ -6,4 +6,4 @@
 投票合约-------------->poll.js
 
 域名根区数据管理合约---->root_zone.js
-域名.com数据管理合约--->authoritative.js
+域名.com数据管理合约--->authoritative.js (顶级 authority)

@@ -3,7 +3,9 @@ const VERIFIABLE_CLAIM = 'verifiable_claim';
 const IDENTITY = 'identity';
 const OWNER = 'owner';
 const Register_commission='register_commission';
+const Register_commission_address='register_commission_address';
 const Security_commission='security_commission';
+const Security_commission_address='security_commission_address';
 
 function loadObj(key) {
     let data = Chain.load(key);
@@ -67,6 +69,7 @@ function issue(inputObj) {
     }
     identity.push(entity.id);
     saveObj(keyOfIdentity, identity);
+    saveObj(owner, identity);
     Chain.tlog('identity', 'the verifiable claim was issued', keyOfIdentity);
 }
 
@@ -87,15 +90,42 @@ function revoke(inputObj) {
         return value !== id;
     });
     saveObj(keyOfIdentity, identity);
+    saveObj(loadObj(OWNER), identity);
 }
 
-function get(id) {
+function get() {
     let result = [
         {"register":loadObj(Register_commission)},
-        {"security":loadObj(Security_commission)}
+        {"security":loadObj(Security_commission)},
+        {"identity":loadObj(getKey(IDENTITY, loadObj(OWNER)))}
     ];
 
     return result;
+}
+function getMember(inputObj) {
+    let registerContractAddress = loadObj(Register_commission_address);
+    let securityContractAddress = loadObj(Security_commission_address);
+
+    Utils.assert(registerContractAddress !== false, 'no registerContractAddress,please initCommissions at first');
+    Utils.assert(securityContractAddress !== false, 'no securityContractAddress,please initCommissions at first');
+
+    let commissionInput = {"method": "getMember","params":{"id":inputObj.id}};
+
+    let registerRes = Chain.contractQuery(registerContractAddress,JSON.stringify(commissionInput));
+
+    let securityRes = Chain.contractQuery(securityContractAddress,JSON.stringify(commissionInput));
+
+    let identityRes = loadObj(getKey(VERIFIABLE_CLAIM, inputObj.id));
+    if (identityRes === undefined){
+        identityRes='wu';
+    }
+
+    let result = [
+        {"register":registerRes.result},
+        {"security":securityRes.result},
+        {"identity":identityRes.result}
+    ] ;
+    return result ;
 }
 
 function findBy(id) {
@@ -121,11 +151,13 @@ function initCommissions(inputObj){
     if (inputObj.register_commission !== undefined){
     let registerContractAddress = inputObj.register_commission.contractAddress;
         Chain.contractCall(registerContractAddress,true,"0",JSON.stringify(inputObj.register_commission));
+        saveObj(Register_commission_address,registerContractAddress);
     }
 
     if (inputObj.security_commission !== undefined){
     let securityContractAddress = inputObj.security_commission.contractAddress;
         Chain.contractCall(securityContractAddress,true,"0",JSON.stringify(inputObj.security_commission));
+        saveObj(Security_commission_address,securityContractAddress);
     }
 
     Chain.tlog('commission', 'init commission is ok');
@@ -143,7 +175,9 @@ function query(input) {
     let inputObj = JSON.parse(input);
     if (inputObj.method === 'get') {
         result = get(inputObj.params.id);
-    } else if (inputObj.method === 'findBy') {
+    }else if (inputObj.method === 'getMember') {
+        result = getMember(inputObj.params);
+    }else if (inputObj.method === 'findBy') {
         result = findBy(inputObj.params.id);
     }else if (inputObj.method === 'initCommissions') {
         result = initCommissions(inputObj.params);
@@ -156,7 +190,7 @@ function query(input) {
 }
 
 function main(input) {
-    let funcList = {'issue': issue, 'revoke': revoke, 'get': get, 'findBy': findBy,'initCommissions': initCommissions,'isOkIncommissions':isOkIncommissions};
+    let funcList = {'issue': issue, 'revoke': revoke, 'get': get, 'findBy': findBy,'initCommissions': initCommissions,'isOkIncommissions':isOkIncommissions,'getMember':getMember};
     let inputObj = JSON.parse(input);
     Utils.assert(funcList.hasOwnProperty(inputObj.method) && typeof funcList[inputObj.method] === 'function', 'Cannot find func:' + inputObj.method);
     funcList[inputObj.method](inputObj.params);

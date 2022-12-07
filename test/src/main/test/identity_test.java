@@ -19,7 +19,7 @@ import org.mortbay.util.ajax.JSON;
 public class identity_test {
     public static final String NODE_URL = "http://test.bifcore.bitfactory.cn";  //星火链测试网RPC地址
     public static BIFSDK sdk = BIFSDK.getInstance(NODE_URL);
-    public static String cTxHash = "61a7d35cc09d6929b6cc0d201f92f92c3c18b9b7cc5cccc68d27a54a05173840";
+    public static String cTxHash = "27f3056d22574c1145c1c7698b8d34470b83623706b85740c198ece49efd211c";
 
     public static final String address = "did:bid:efJmpzPvG76ktDykMtzKVMAEForBiw6c";
     public static final String privateKey = "priSPKdmZA2jsa8hzetan3H315HfTWftsueEkZJAxtheKPYhJL";
@@ -29,8 +29,10 @@ public class identity_test {
 
     public static void main(String[] args) {
 //        initCommissions(hashDetail(cTxHash));
-        get(hashDetail(cTxHash));
+//        getMember(hashDetail(cTxHash));
 //        isOkIncommissions(hashDetail(cTxHash));
+//        issue(hashDetail(cTxHash));
+        get(hashDetail(cTxHash));
     }
 
     /**
@@ -66,6 +68,27 @@ public class identity_test {
 
         String callInput = "{\"method\": \"get\",\"params\": {\"id\": \"123123123123\"}}";    //查询input
 
+        cCallReq.setContractAddress(cAddr); // cAddr为 使用交易hash值，获取的合约地址
+        cCallReq.setInput(callInput);
+
+        BIFContractCallResponse cCallRsp = sdk.getBIFContractService().contractQuery(cCallReq); //查询
+
+        if (cCallRsp.getErrorCode() == 0) {
+            BIFContractCallResult result = cCallRsp.getResult();
+            System.out.println(JsonUtils.toJSONString(result.getQueryRets()));
+        } else {
+            System.out.println(cCallRsp.getErrorDesc());
+        }
+    }
+    /**
+     * 智能合约查询
+     * @param cAddr
+     */
+    public static void getMember(String cAddr){
+
+        String callInput = "{\"method\": \"getMember\",\"params\": {\"id\": \"1004\"}}";    //查询input
+
+        BIFContractCallRequest cCallReq = new BIFContractCallRequest();             //查询请求
         cCallReq.setContractAddress(cAddr); // cAddr为 使用交易hash值，获取的合约地址
         cCallReq.setInput(callInput);
 
@@ -181,6 +204,27 @@ public class identity_test {
             System.out.println(JsonUtils.toJSONString(result));
         } else {
             System.out.println(cCallRsp.getErrorDesc());
+        }
+
+    }
+    /**
+     * 智能合约issue 发行
+     * @param cAddr
+     */
+    public static void issue(String cAddr){
+        String callInput = "{\"method\":\"issue\",\"params\":{\"entity\":{\"subject\":\""+address+"\",\"id\":\"1004\",\"createdAt\":\"\"}}}";    //查询input
+
+        BIFContractInvokeRequest cCallReq = new BIFContractInvokeRequest();
+        cCallReq.setContractAddress(cAddr);
+        cCallReq.setSenderAddress(address);
+        cCallReq.setBIFAmount(1l);
+        cCallReq.setPrivateKey(privateKey);
+        cCallReq.setInput(callInput);
+        BIFContractInvokeResponse res = sdk.getBIFContractService().contractInvoke(cCallReq);
+        if (res.getErrorCode()==0){
+            System.out.println(JsonUtils.toJSONString(res.getResult()));
+        }else {
+            System.out.println(res.getErrorDesc());
         }
 
     }

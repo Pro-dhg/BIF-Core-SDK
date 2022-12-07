@@ -29,8 +29,8 @@ public class security_commission_test {
 //        addMember(hashDetail(cTxHash));
 //        expelMember(hashDetail(cTxHash));
 //        updateMemberInfo(hashDetail(cTxHash));
-//        get(hashDetail(cTxHash));
-        getMember(hashDetail(cTxHash));
+        get(hashDetail(cTxHash));
+//        getMember(hashDetail(cTxHash));
     }
 
     /**
