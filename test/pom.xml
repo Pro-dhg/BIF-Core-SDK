@@ -18,6 +18,13 @@
 
     <dependencies>
         <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>bif.chain</groupId>
             <artifactId>bif-chain-sdk</artifactId>
             <version>1.0.0</version>
