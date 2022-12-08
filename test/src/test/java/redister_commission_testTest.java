@@ -11,16 +11,14 @@ import cn.bif.model.response.result.BIFContractInvokeResult;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 public class redister_commission_testTest {
 
-    public static final String NODE_URL = "http://test.bifcore.bitfactory.cn";  //星火链测试网RPC地址
-    public static BIFSDK sdk = BIFSDK.getInstance(NODE_URL);
-    public static String cTxHash = "a97fbb5585894d3601735b158b34122c319bdae8bc008ef7ac946696d1ea7c24"; //合约hash
+    private static final String NODE_URL = "http://test.bifcore.bitfactory.cn";  //星火链测试网RPC地址
+    private static BIFSDK sdk = BIFSDK.getInstance(NODE_URL);
+    private static String cTxHash = "a97fbb5585894d3601735b158b34122c319bdae8bc008ef7ac946696d1ea7c24"; //合约hash
 
-    public static final String address = "did:bid:ef28Wz8twCynVe6PAnamLYCAFJYgJSnMh";
-    public static final String privateKey = "priSPKrSftQVRWM33dWxxSmwhRX7ArgyUmwV3pXun79QKsQkW2";
+    private static final String address = "did:bid:ef28Wz8twCynVe6PAnamLYCAFJYgJSnMh";
+    private static final String privateKey = "priSPKrSftQVRWM33dWxxSmwhRX7ArgyUmwV3pXun79QKsQkW2";
     private static final BIFContractCallRequest cCallReq = new BIFContractCallRequest(); //可打印
     private static final BIFContractInvokeRequest cCallInvokeReq = new BIFContractInvokeRequest(); //不可打印
     private static String cAddr = "";

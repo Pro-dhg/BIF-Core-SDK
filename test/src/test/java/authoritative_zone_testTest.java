@@ -12,12 +12,12 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class authoritative_zone_testTest {
-    public static final String NODE_URL = "http://test.bifcore.bitfactory.cn";  //星火链测试网RPC地址
-    public static BIFSDK sdk = BIFSDK.getInstance(NODE_URL);
-    public static String cTxHash = "cf0ee530e7d9d2dcd2c794ce3ef3b5d16471b00439dad8d60478dd46a540605f";
+    private static final String NODE_URL = "http://test.bifcore.bitfactory.cn";  //星火链测试网RPC地址
+    private static BIFSDK sdk = BIFSDK.getInstance(NODE_URL);
+    private static String cTxHash = "cf0ee530e7d9d2dcd2c794ce3ef3b5d16471b00439dad8d60478dd46a540605f";
 
-    public static final String address = "did:bid:ef28Wz8twCynVe6PAnamLYCAFJYgJSnMh";
-    public static final String privateKey = "priSPKrSftQVRWM33dWxxSmwhRX7ArgyUmwV3pXun79QKsQkW2";
+    private static final String address = "did:bid:ef28Wz8twCynVe6PAnamLYCAFJYgJSnMh";
+    private static final String privateKey = "priSPKrSftQVRWM33dWxxSmwhRX7ArgyUmwV3pXun79QKsQkW2";
     private static final BIFContractCallRequest cCallReq = new BIFContractCallRequest(); //可打印
     private static final BIFContractInvokeRequest cCallInvokeReq = new BIFContractInvokeRequest(); //不可打印
     private static String cAddr = "";
