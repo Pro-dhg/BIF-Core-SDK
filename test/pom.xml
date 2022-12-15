@@ -53,5 +53,10 @@
             </exclusions>
 
         </dependency>
+        <dependency>
+            <groupId>bif.chain</groupId>
+            <artifactId>bif-chain-sdk</artifactId>
+            <version>1.0.2</version>
+        </dependency>
     </dependencies>
 </project>
