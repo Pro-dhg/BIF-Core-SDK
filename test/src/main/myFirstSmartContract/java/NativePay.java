@@ -85,6 +85,16 @@ public class NativePay {
     public static void CreateOrder(CloseableHttpClient httpClient) throws Exception{
         HttpPost httpPost = new HttpPost("https://api.mch.weixin.qq.com/v3/pay/transactions/native");
         // 请求body参数
+        /**
+         * 重要参数说明：
+         *   out_trade_no：商户系统内部订单号，只能是数字、大小写字母_-*且在同一个商户号下唯一
+         *
+         *   description：商品描述
+         *
+         *   notify_url：支付回调通知URL，该地址必须为直接可访问的URL，不允许携带查询串
+         *
+         *   total：订单总金额，单位为分
+         */
         String reqdata = "{"
                 + "\"time_expire\":\"2018-06-08T10:34:56+08:00\","
                 + "\"amount\": {"

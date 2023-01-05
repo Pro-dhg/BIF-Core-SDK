@@ -26,6 +26,7 @@ public class wallte {
         BIFTransactionGetInfoResponse response = sdk.getBIFTransactionService().getTransactionInfo(request);
         if (response.getErrorCode() == 0) {
             System.out.println(JsonUtils.toJSONString(response.getResult()));
+            System.out.println(JsonUtils.toJSONString(response.getResult().getTransactions()[0].getErrorCode() != 0 ));
         } else {
             System.out.println(JsonUtils.toJSONString(response));
         }
